@@ -8,6 +8,8 @@ Código boilerplate original: https://github.com/StephenGrider/ReduxSimpleStarte
 
 Conceptos más avanzados sobre el funcionamiento de Redux.
 Contruimos una aplicación que simula un blog.
+Para realizar mockups: https://balsamiq.com.
+Para probar API rest: https://www.getpostman.com.
 
 ## Ejecución
 Descargar el código. Una vez en la carpeta introducir:
