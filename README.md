@@ -10,6 +10,9 @@ Código boilerplate original: https://github.com/StephenGrider/ReduxSimpleStarte
 - Contruimos una aplicación que simula un blog.
 - Para realizar mockups: https://balsamiq.com.
 - Para probar API rest: https://www.getpostman.com.
+- Como librería de utilidades JS: https://lodash.com/ . En serio, no se puede vivir sin ella :).
+- Para realizar peticiones Ajax: axios + react-promise. La primera nos permite realizar las peticiones de forma super sencilla, al estilo de JQuery. La segunda gestiona las promesas por nosotros 
+- Las peticiones se hacen contra un API desplogado en Heroku. 
 
 ## Ejecución
 Descargar el código. Una vez en la carpeta introducir:
