@@ -12,4 +12,4 @@ function fetchPosts(){
     };
 }
 
-export {FETCH_POSTS, fetchPosts};
+export {ROOT_URL, FETCH_POSTS, fetchPosts};
