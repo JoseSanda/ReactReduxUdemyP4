@@ -3,6 +3,7 @@ import React, {Component} from 'react';
 import  {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import {fetchPosts} from "../actions";
+import {Link} from 'react-router-dom';
 
 class PostIndex extends Component {
     componentDidMount() {
@@ -10,11 +11,11 @@ class PostIndex extends Component {
     }
     renderPost(){
         return _.map(this.props.posts, post => {
-            const postURL = `posts/${post.id}`;
+            const postURL = `/posts/${post.id}`;
             return (
                 <li key={post.id} className="list-group-item">
                     <h2>{post.title}</h2>
-                    <p>a
+                    <p>
                         {post.content.substring(0,20)}
                         <br/>
                         <a href={postURL} className="link">Ver post</a>
@@ -25,12 +26,19 @@ class PostIndex extends Component {
     }
 
     render(){
-        console.log('Did mount: '+this.props.posts);
         return (
-            <div>
-                <ul className="list-group">
-                    {this.renderPost()}
-                </ul>
+            <div className="container-fluid">
+                <div className="row flex-xl-nowrap">
+                    <ul className="nav justify-content-end">
+                        <li className="nav-item">
+                            <Link className="nav-link active btn btn-primary" to="/posts/new">Add new post</Link>
+                        </li>
+                    </ul>
+                    <h2>Posts</h2>
+                    <ul className="list-group">
+                        {this.renderPost()}
+                    </ul>
+                </div>
             </div>
         );
     }
