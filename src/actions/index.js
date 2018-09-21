@@ -11,12 +11,12 @@ const API_KEY = '?key=ELTIOLABARA123';
 
 //Configuracion firebase
 const config = {
-    apiKey: "AIzaSyD1l37N_3WOHHSMs3MGVP2Q3tUu6BjIjFk",
-    authDomain: "reactudemycourse-205120.firebaseapp.com",
-    databaseURL: "https://reactudemycourse-205120.firebaseio.com/",
-    projectId: "reactudemycourse-205120",
-    storageBucket: "reactudemycourse-205120.appspot.com",
-    messagingSenderId: "567000458420"
+    apiKey: "ENTER API KEY HERE",
+    authDomain: "ENTER API DOMAIN",
+    databaseURL: "ENTER DATABASE URL",
+    projectId: "ENTER PROJECT ID",
+    storageBucket: "ENTER STORAGE",
+    messagingSenderId: "ENTER SENDER ID"
 };
 firebase.initializeApp(config);
 
