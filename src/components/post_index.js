@@ -2,26 +2,28 @@ import _ from 'lodash';
 import React, {Component} from 'react';
 import  {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
-import {fetchPosts} from "../actions";
+import {fetchPostsFromFirebase} from "../actions";
 import {Link} from 'react-router-dom';
 
 class PostIndex extends Component {
     componentDidMount() {
-        this.props.fetchPosts();
+        this.props.fetchPostsFromFirebase();
     }
     renderPost(){
         return _.map(this.props.posts, post => {
-            const postURL = `/posts/${post.id}`;
-            return (
-                <li key={post.id} className="list-group-item">
-                    <h2>{post.title}</h2>
-                    <p>
-                        {post.content.substring(0,20)}
-                        <br/>
-                        <a href={postURL} className="link">Ver post</a>
-                    </p>
-                </li>
-            );
+            if(post){
+                const postURL = `/posts/${post.id}`;
+                return (
+                    <li key={post.id} className="list-group-item">
+                        <h2>{post.title}</h2>
+                        <p>
+                            {post.content.substring(0,20)}...
+                            <br/>
+                            <a href={postURL} className="link">Ver post</a>
+                        </p>
+                    </li>
+                );
+            }
         })
     }
 
@@ -49,7 +51,7 @@ function mapStateToProps(state){
 }
 
 function mapDispatchToProps(dispatch){
-    return bindActionCreators({fetchPosts}, dispatch);
+    return bindActionCreators({fetchPostsFromFirebase}, dispatch);
 }
 
 export default connect(mapStateToProps,mapDispatchToProps)(PostIndex);

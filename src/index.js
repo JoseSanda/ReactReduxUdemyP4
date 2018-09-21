@@ -8,11 +8,10 @@ import Post from './components/post';
 import PostNew from './components/post_new';
 import promiseMiddleware from 'redux-promise';
 import reducers from './reducers';
-
-const createStoreWithMiddleware = applyMiddleware(promiseMiddleware)(createStore);
+import thunk from 'redux-thunk';
 
 ReactDOM.render(
-  <Provider store={createStoreWithMiddleware(reducers)}>
+  <Provider store={createStore(reducers, applyMiddleware(promiseMiddleware, thunk))}>
     <BrowserRouter>
         <div>
             <Switch>

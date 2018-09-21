@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import {DELETE_POST, FETCH_ONE_POST, FETCH_POSTS} from "../actions";
+import {DELETE_POST, FETCH_ONE_POST, FETCH_POSTS, FETCH_POSTS_FIREBASE} from "../actions";
 
 export default function(state={}, action){
     switch (action.type) {
@@ -15,6 +15,12 @@ export default function(state={}, action){
             return {...state, [action.payload.data.id]: action.payload.data};
         case FETCH_POSTS:
             return _.mapKeys(action.payload.data, 'id');
+        case FETCH_POSTS_FIREBASE:
+            if(action.payload) {
+                return _.mapKeys(action.payload, 'id');
+            }else{
+                return state;
+            }
         default:
             return state;
     }
