@@ -2,7 +2,7 @@ import _ from 'lodash';
 import React, {Component} from 'react';
 import  {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
-import {fetchPostsFromFirebase} from "../actions";
+import {fetchPosts} from "../actions";
 import {Link} from 'react-router-dom';
 
 class PostIndex extends Component {
@@ -51,7 +51,7 @@ function mapStateToProps(state){
 }
 
 function mapDispatchToProps(dispatch){
-    return bindActionCreators({fetchPostsFromFirebase}, dispatch);
+    return bindActionCreators({fetchPostsFromFirebase: fetchPosts}, dispatch);
 }
 
 export default connect(mapStateToProps,mapDispatchToProps)(PostIndex);

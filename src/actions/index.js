@@ -1,45 +1,46 @@
-import axios from 'axios';
-import firebase from 'firebase';
+import firebase from 'firebase/app';
+import 'firebase/database';
+import config from '../config_firebase';
 
 const FETCH_POSTS = 'FETCH_POSTS';
-const FETCH_POSTS_FIREBASE = 'FETCH_POSTS_FIREBASE';
 const FETCH_ONE_POST = 'FETCH_ONE_POST';
 const CREATE_POST = 'CREATE_POST';
 const DELETE_POST = 'DELETE_POST';
-const ROOT_URL= 'http://reduxblog.herokuapp.com/api';
-const API_KEY = '?key=ELTIOLABARA123';
 
 //Configuracion firebase
-const config = {
-    apiKey: "AIzaSyD1l37N_3WOHHSMs3MGVP2Q3tUu6BjIjFk",
-    authDomain: "reactudemycourse-205120.firebaseapp.com",
-    databaseURL: "https://reactudemycourse-205120.firebaseio.com/",
-    projectId: "reactudemycourse-205120",
-    storageBucket: "reactudemycourse-205120.appspot.com",
-    messagingSenderId: "567000458420"
-};
 firebase.initializeApp(config);
 
-function fetchOnePost(postId){
-    const request = axios.get(`${ROOT_URL}/posts/${postId}${API_KEY}`);
+function getPost(post){
     return {
         type: FETCH_ONE_POST,
-        payload: request
+        payload: post
+    };
+}
+
+function fetchOnePost(postId){
+    return dispatch => {
+        dispatch(getPost());
+        return firebase.database().ref().child(`posts/${postId}`).once("value", snapshot => {
+            const post = snapshot.val();
+            console.log(post);
+            dispatch(getPost(post));
+        }).catch((error) => {
+            console.log(error);
+            dispatch(getPost());
+        });
     };
 }
 
 function createPost(post, callback){
-    const request = axios.post(`${ROOT_URL}/posts${API_KEY}`,post)
-        .then(()=> callback());
+    let newPost = firebase.database().ref().child(`posts`).push();
+    newPost.set({...post,"id":newPost.key}).then(callback());
     return {
-        type: CREATE_POST,
-        payload: request
+        type: CREATE_POST
     };
 }
 
 function deletePost(postId, callback){
-    axios.delete(`${ROOT_URL}/posts/${postId}${API_KEY}`)
-        .then(()=> callback());
+    firebase.database().ref().child(`posts/${postId}`).remove().then(callback());
     return {
         type: DELETE_POST,
         payload: postId
@@ -47,31 +48,24 @@ function deletePost(postId, callback){
 }
 
 function getPosts(posts){
-    console.log(posts);
     return {
-        type: FETCH_POSTS_FIREBASE,
+        type: FETCH_POSTS,
         payload: posts
     };
 }
 
-function gettingPosts(){
-    return {
-        type: FETCH_POSTS_FIREBASE
-    };
-}
-
-function fetchPostsFromFirebase(){
+function fetchPosts(){
     return dispatch => {
-        dispatch(gettingPosts());
+        dispatch(getPosts());
         return firebase.database().ref().child("posts").once("value", snapshot => {
             const posts = snapshot.val();
             dispatch(getPosts(posts));
         }).catch((error) => {
             console.log(error);
-            dispatch(gettingPosts());
+            dispatch(getPosts());
         });
     };
-};
+}
 
-export {ROOT_URL, FETCH_POSTS, FETCH_ONE_POST, CREATE_POST, DELETE_POST,FETCH_POSTS_FIREBASE, fetchOnePost, fetchPostsFromFirebase, createPost, deletePost};
+export {FETCH_POSTS, FETCH_ONE_POST, CREATE_POST, DELETE_POST,fetchOnePost, fetchPosts, createPost, deletePost};
 

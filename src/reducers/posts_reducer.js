@@ -12,10 +12,12 @@ export default function(state={}, action){
             // newState[post.id] = post;
             // return newState;
             //ES6
-            return {...state, [action.payload.data.id]: action.payload.data};
+            if(action.payload){
+                return {...state, [action.payload.id]: action.payload};
+            }else{
+                return state;
+            }
         case FETCH_POSTS:
-            return _.mapKeys(action.payload.data, 'id');
-        case FETCH_POSTS_FIREBASE:
             if(action.payload) {
                 return _.mapKeys(action.payload, 'id');
             }else{
